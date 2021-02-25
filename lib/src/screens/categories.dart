@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:restaurant_app/src/resources/controllers/shopping_cart_controller.dart';
 import 'package:restaurant_app/src/resources/mock_data/categories.dart';
+
+import 'food_menu.dart';
 
 class Categories extends StatefulWidget {
   @override
@@ -14,6 +18,32 @@ class _CategoriesState extends State<Categories> {
         elevation: 0.0,
         title: Text('Categories'),
         centerTitle: true,
+        actions: [
+          Stack(
+            children: [
+              IconButton(
+                icon: Icon(Icons.shopping_cart),
+                onPressed: () {
+                  Get.to(() => FoodMenu());
+                },
+              ),
+              Obx(() => ShoppingCartController.to.items.length > 0 ? Positioned(
+                child: Container(
+                  padding: EdgeInsets.all(4.0),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Colors.amber),
+                  child: Text(
+                    ShoppingCartController.to.getTotalCount().toString(),
+                    style: TextStyle(fontSize: 16.0),
+                  ),
+                ),
+                top: 0.0,
+                right: 0.0,
+              ) : Offstage(),
+              ),
+            ],
+          ),
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(
